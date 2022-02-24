@@ -64,4 +64,3 @@ func TestJobRepositoryDbUpdate(t *testing.T) {
 	require.Equal(t, j.ID, job.ID)
 	require.Equal(t, j.VideoID, video.ID)
 }
-

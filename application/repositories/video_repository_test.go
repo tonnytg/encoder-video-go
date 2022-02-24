@@ -19,7 +19,7 @@ func TestVideoRepositoryDbInsert(t *testing.T) {
 	video.FilePath = "path"
 	video.CreateAt = time.Now()
 
-	repo := repositories.VideoRepositoryDb{Db:db}
+	repo := repositories.VideoRepositoryDb{Db: db}
 	repo.Insert(video)
 
 	v, err := repo.Find(video.ID)

@@ -8,7 +8,7 @@ import (
 
 type JobRepository interface {
 	Insert(job *domain.Job) (*domain.Job, error)
-	Find(id string)(*domain.Job, error)
+	Find(id string) (*domain.Job, error)
 	Update(job *domain.Job) (*domain.Job, error)
 }
 
@@ -25,7 +25,7 @@ func (repo JobRepositoryDb) Insert(job *domain.Job) (*domain.Job, error) {
 	return job, nil
 }
 
-func (repo JobRepositoryDb) Find(id string)(*domain.Job, error) {
+func (repo JobRepositoryDb) Find(id string) (*domain.Job, error) {
 
 	var job domain.Job
 	repo.Db.First(&job, "id = ?", id)
