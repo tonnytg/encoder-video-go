@@ -90,6 +90,7 @@ func (vu *VideoUpload) ProcessUpload(concurrency int, doneUpload chan string) er
 		for x := 0; x < len(vu.Paths); x++ {
 			in <- x
 		}
+		close(in)
 	}()
 
 	for r := range returnChannel {
