@@ -40,7 +40,7 @@ func TestVideoServiceUpload(t *testing.T) {
 	doneUpload := make(chan string)
 	go videoUpload.ProcessUpload(50, doneUpload)
 
-	result := <- doneUpload
+	result := <-doneUpload
 	require.Equal(t, result, "upload completed")
 
 	err = videoService.Finish()

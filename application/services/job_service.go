@@ -9,9 +9,9 @@ import (
 )
 
 type JobService struct {
-	Job *domain.Job
+	Job           *domain.Job
 	JobRepository repositories.JobRepository
-	VideoService VideoService
+	VideoService  VideoService
 }
 
 func (j *JobService) Start() error {
@@ -84,7 +84,7 @@ func (j *JobService) performUpload() error {
 	go videoUpload.ProcessUpload(concurrency, doneUpload)
 
 	var uploadResult string
-	uploadResult = <- doneUpload
+	uploadResult = <-doneUpload
 
 	if uploadResult != "upload completed" {
 		return j.failJob(errors.New(uploadResult))
