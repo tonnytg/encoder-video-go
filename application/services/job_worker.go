@@ -7,6 +7,7 @@ import (
 	"github.com/tonnytg/encoder-video-go/domain"
 	"github.com/tonnytg/encoder-video-go/framework/utils"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -16,12 +17,14 @@ type JobWorkerResult struct {
 	Error   error
 }
 
+var Mutex = &sync.Mutex{}
+
 func JobWorker(messageChannel chan amqp.Delivery, returnChan chan JobWorkerResult, jobService JobService, job domain.Job, workerID int) {
 
-	//	{
-	//		"resource_id": "1",
-	//		"file_path": "file.mp4"
-	//	}
+	//{
+	//	"resource_id": "1",
+	//	"file_path": "file.mp4"
+	//}
 
 	// loop for each message on channel
 	for message := range messageChannel {
@@ -33,12 +36,14 @@ func JobWorker(messageChannel chan amqp.Delivery, returnChan chan JobWorkerResul
 		}
 
 		// parse json to struct
+		Mutex.Lock()
 		err = json.Unmarshal(message.Body, &jobService.VideoService.Video)
 		jobService.VideoService.Video.ID = uuid.New().String()
 		if err != nil {
 			returnChan <- returnJobResult(domain.Job{}, message, err)
 			continue
 		}
+		Mutex.Unlock()
 
 		// Validate the video
 		err = jobService.VideoService.Video.Validate()
