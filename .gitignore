@@ -1,3 +1,6 @@
+# Local Database
+.pgdata
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
